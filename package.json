@@ -1,0 +1,14 @@
+{
+  "name": "ce-store-js",
+  "version": "0.0.1",
+  "description": "Controlled English JavaScript Client Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "author": "James Thomas <james@jamesthom.as>",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.19.1"
+  }
+}
