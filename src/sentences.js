@@ -4,6 +4,8 @@ const sentencesSymbol = Symbol('sentences')
 
 const Concept = require('./concept')
 const Instance = require('./instance')
+const Query = require('./query')
+const Rule = require('./rule')
 const ExtendInstance = require('./extend_instance')
 
 class Sentences {
@@ -27,6 +29,14 @@ class Sentences {
 
   the (concept, instance) {
     return this.sentence(new ExtendInstance(concept, instance))
+  }
+
+  query (name) {
+    return this.sentence(new Query(name))
+  }
+
+  rule (name) {
+    return this.sentence(new Rule(name))
   }
 
   sentence (klass) {

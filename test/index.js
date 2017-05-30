@@ -93,7 +93,7 @@ test('can define concepts', t => {
   t.is(sentences.toString(), 'conceptualise a ~ man ~ M that is a person and has the value V as ~ age ~ and ~ is the brother of ~ the person P1.')
 })
 
-test('can construct multiple sentencess', t => {
+test('can construct multiple sentences', t => {
   let sentences = new CE.Sentences()
 
   sentences
@@ -106,4 +106,89 @@ test('can construct multiple sentencess', t => {
     .the('man', 'John')
 
   t.is(sentences.toString(), 'conceptualise a ~ man ~ M. there is a man named John. the man John.')
+})
+
+test('can create new queries', t => {
+  let sentences = new CE.Sentences()
+
+  sentences
+    .query('parent')
+    .for('V1', 'V2', 'V3')
+
+  t.is(sentences.toString(), '[ parent ]\nfor which V1, V2 and V3 is it true that\n\n.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .query('parent')
+    .for('V1', 'V2', 'V3')
+    .there('person', 'V1')
+
+  t.is(sentences.toString(), '[ parent ]\nfor which V1, V2 and V3 is it true that\n  ( there is a person named V1 )\n.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .query('parent')
+    .for('V1', 'V2', 'V3')
+    .the('person', 'V1', 'man')
+
+  t.is(sentences.toString(), '[ parent ]\nfor which V1, V2 and V3 is it true that\n  ( the person V1 is a man )\n.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .query('parent')
+    .for('V1', 'V2', 'V3')
+    .the('person', 'P1', 'is the parent of', 'person', 'P2')
+
+  t.is(sentences.toString(), '[ parent ]\nfor which V1, V2 and V3 is it true that\n  ( the person P1 is the parent of the person P2 )\n.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .query('parent')
+    .for('V1', 'V2', 'V3')
+    .there('person', 'V1')
+    .the('person', 'V1', 'man')
+    .the('person', 'P1', 'is the parent of', 'person', 'P2')
+
+  t.is(sentences.toString(), '[ parent ]\nfor which V1, V2 and V3 is it true that\n  ( there is a person named V1 ) and\n  ( the person V1 is a man ) and\n  ( the person P1 is the parent of the person P2 )\n.')
+})
+
+test('can create new rules', t => {
+  let sentences = new CE.Sentences()
+
+  sentences
+    .rule('sibling')
+    .the('person', 'P1', 'is the associate of', 'person', 'P2')
+    .then()
+    .the('person', 'P2', 'is the associate of', 'person', 'P1')
+
+  t.is(sentences.toString(), '[ sibling ]\nif\n  ( the person P1 is the associate of the person P2 )\nthen\n  ( the person P2 is the associate of the person P1 )\n.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .rule('male')
+    .the('person', 'P1', 'male')
+    .then()
+    .the('person', 'P1', 'not female')
+
+  t.is(sentences.toString(), '[ male ]\nif\n  ( the person P1 is a male )\nthen\n  ( the person P1 is a not female )\n.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .rule('male')
+    .there('person', 'V1')
+    .then()
+    .there('person', 'V2')
+
+  t.is(sentences.toString(), '[ male ]\nif\n  ( there is a person named V1 )\nthen\n  ( there is a person named V2 )\n.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .rule('male')
+    .there('person', 'V1')
+    .the('person', 'P1', 'male')
+    .then()
+    .there('person', 'V2')
+    .the('person', 'P1', 'not female')
+
+  t.is(sentences.toString(), '[ male ]\nif\n  ( there is a person named V1 ) and\n  ( the person P1 is a male )\nthen\n  ( there is a person named V2 ) and\n  ( the person P1 is a not female )\n.')
 })
