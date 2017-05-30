@@ -4,116 +4,106 @@ import test from 'ava'
 import CE from '../index.js'
 
 test('can create new instances', t => {
-  let sentence = new CE.Sentence()
+  let sentences = new CE.Sentences()
 
-  sentence
-    .there.is.a('man', 'John')
-  t.is(sentence.toString(), 'there is a man named John.')
+  sentences
+    .there_is_a('man', 'John')
 
-  sentence = new CE.Sentence()
-  sentence
-    .there.is.a('man', 'John')
+  t.is(sentences.toString(), 'there is a man named John.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .there_is_a('man', 'John')
     .has('53', 'age')
 
-  t.is(sentence.toString(), 'there is a man named John that has \'53\' as age.')
+  t.is(sentences.toString(), 'there is a man named John that has \'53\' as age.')
 
-  sentence = new CE.Sentence()
-  sentence
-    .there.is.a('man', 'John')
+  sentences = new CE.Sentences()
+  sentences
+    .there_is_a('man', 'John')
+    .is('sibling', 'person', 'Jill')
+
+  t.is(sentences.toString(), 'there is a man named John that is the sibling of the person Jill.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .there_is_a('man', 'John')
+    .is('sibling', 'person', 'Jill')
     .has('53', 'age')
-    .has('manchester', 'home')
-
-  t.is(sentence.toString(), 'there is a man named John that has \'53\' as age and has \'manchester\' as home.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .there.is.a('man', 'John')
-    .has('53', 'age')
-    .has('manchester', 'home')
+    .is('brother', 'person', 'James')
     .has('united', 'team')
 
-  t.is(sentence.toString(), 'there is a man named John that has \'53\' as age and has \'manchester\' as home and has \'united\' as team.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .there.is.a('man', 'John')
-    .is('sibling').of('person', 'Jill')
-
-  t.is(sentence.toString(), 'there is a man named John that is the sibling of the person Jill.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .there.is.a('man', 'John')
-    .has('53', 'age')
-    .is('sibling').of('person', 'Jill')
-
-  t.is(sentence.toString(), 'there is a man named John that has \'53\' as age and is the sibling of the person Jill.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .there.is.a('man', 'John')
-    .has('53', 'age')
-    .is('sibling').of('person', 'Jill')
-    .is('brother').of('person', 'James')
-
-  t.is(sentence.toString(), 'there is a man named John that has \'53\' as age and is the sibling of the person Jill and is the brother of the person James.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .there.is.a('man', 'John')
-    .is('sibling').of('person', 'Jill')
-    .has('53', 'age')
-    .is('brother').of('person', 'James')
-    .has('united', 'team')
-
-  t.is(sentence.toString(), 'there is a man named John that is the sibling of the person Jill and has \'53\' as age and is the brother of the person James and has \'united\' as team.')
+  t.is(sentences.toString(), 'there is a man named John that is the sibling of the person Jill and has \'53\' as age and is the brother of the person James and has \'united\' as team.')
 })
 
 test('can extend instances', t => {
-  let sentence = new CE.Sentence()
-  sentence
+  let sentences = new CE.Sentences()
+  sentences
     .the('man', 'John')
 
-  t.is(sentence.toString(), 'the man John.')
+  t.is(sentences.toString(), 'the man John.')
 
-  sentence = new CE.Sentence()
-  sentence
+  sentences = new CE.Sentences()
+  sentences
     .the('man', 'John')
+    .is('sibling', 'person', 'Jill')
     .has('53', 'age')
-
-  t.is(sentence.toString(), 'the man John has \'53\' as age.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .the('man', 'John')
-    .is('sibling').of('person', 'Jill')
-
-  t.is(sentence.toString(), 'the man John is the sibling of the person Jill.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .the('man', 'John')
-    .has('53', 'age')
-    .is('sibling').of('person', 'Jill')
-
-  t.is(sentence.toString(), 'the man John has \'53\' as age and is the sibling of the person Jill.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .the('man', 'John')
-    .has('53', 'age')
-    .is('sibling').of('person', 'Jill')
-    .is('brother').of('person', 'James')
-
-  t.is(sentence.toString(), 'the man John has \'53\' as age and is the sibling of the person Jill and is the brother of the person James.')
-
-  sentence = new CE.Sentence()
-  sentence
-    .the('man', 'John')
-    .is('sibling').of('person', 'Jill')
-    .has('53', 'age')
-    .is('brother').of('person', 'James')
+    .is('brother', 'person', 'James')
     .has('united', 'team')
 
-  t.is(sentence.toString(), 'the man John is the sibling of the person Jill and has \'53\' as age and is the brother of the person James and has \'united\' as team.')
+  t.is(sentences.toString(), 'the man John is the sibling of the person Jill and has \'53\' as age and is the brother of the person James and has \'united\' as team.')
+})
+
+test('can define concepts', t => {
+  let sentences = new CE.Sentences()
+
+  sentences
+    .concept('man', 'M')
+
+  t.is(sentences.toString(), 'conceptualise a ~ man ~ M.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .concept('man', 'M')
+    .is('person')
+
+  t.is(sentences.toString(), 'conceptualise a ~ man ~ M that is a person.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .concept('man', 'M')
+    .value('V', 'age')
+
+  t.is(sentences.toString(), 'conceptualise a ~ man ~ M that has the value V as ~ age ~.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .concept('man', 'M')
+    .property('is the brother of', 'person', 'P1')
+
+  t.is(sentences.toString(), 'conceptualise a ~ man ~ M that ~ is the brother of ~ the person P1.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .concept('man', 'M')
+    .is('person')
+    .value('V', 'age')
+    .property('is the brother of', 'person', 'P1')
+
+  t.is(sentences.toString(), 'conceptualise a ~ man ~ M that is a person and has the value V as ~ age ~ and ~ is the brother of ~ the person P1.')
+})
+
+test('can construct multiple sentencess', t => {
+  let sentences = new CE.Sentences()
+
+  sentences
+    .concept('man', 'M')
+
+  sentences
+    .there_is_a('man', 'John')
+
+  sentences
+    .the('man', 'John')
+
+  t.is(sentences.toString(), 'conceptualise a ~ man ~ M. there is a man named John. the man John.')
 })

@@ -1,7 +1,7 @@
 'use strict'
 
-const Sentence = require('./src/sentence')
+const Sentences = require('./src/sentences')
 
 module.exports = {
-  Sentence
+  Sentences
 }
