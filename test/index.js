@@ -28,6 +28,14 @@ test('can create new instances', t => {
   sentences = new CE.Sentences()
   sentences
     .there_is_a('man', 'John')
+    .is('football fan')
+    .property('supports', 'united')
+
+  t.is(sentences.toString(), 'there is a man named John that is a football fan and supports \'united\'.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .there_is_a('man', 'John')
     .is('sibling', 'person', 'Jill')
     .has('53', 'age')
     .is('brother', 'person', 'James')
@@ -48,10 +56,11 @@ test('can extend instances', t => {
     .the('man', 'John')
     .is('sibling', 'person', 'Jill')
     .has('53', 'age')
-    .is('brother', 'person', 'James')
+    .is('football fan')
+    .property('supports', 'united')
     .has('united', 'team')
 
-  t.is(sentences.toString(), 'the man John is the sibling of the person Jill and has \'53\' as age and is the brother of the person James and has \'united\' as team.')
+  t.is(sentences.toString(), 'the man John is the sibling of the person Jill and has \'53\' as age and is a football fan and supports \'united\' and has \'united\' as team.')
 })
 
 test('can define concepts', t => {

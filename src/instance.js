@@ -7,12 +7,21 @@ class Instance {
   }
 
   is (name, concept, value) {
-    this.clauses.push(`is the ${name} of the ${concept} ${value}`)
+    if (concept && value) {
+      this.clauses.push(`is the ${name} of the ${concept} ${value}`)
+    } else {
+      this.clauses.push(`is a ${name}`)
+    }
     return this
   }
 
   has (property, concept) {
     this.clauses.push(`has \'${property}\' as ${concept}`)
+    return this
+  }
+
+  property (property, value) {
+    this.clauses.push(`${property} \'${value}\'`)
     return this
   }
 
