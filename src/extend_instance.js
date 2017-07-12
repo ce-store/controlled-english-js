@@ -4,7 +4,7 @@ const Instance = require('./instance')
 
 class ExtendInstance extends Instance {
   prefix () {
-    return `the ${this.instance.concept} ${this.instance.name}`
+    return `the ${this.instance.concept} \'${this.instance.name}\'`
   }
 }
 

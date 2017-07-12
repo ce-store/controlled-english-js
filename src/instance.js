@@ -6,15 +6,16 @@ class Instance {
     this.clauses = []
   }
 
-  is (name, concept, value) {
-    if (concept && value) {
-      this.clauses.push(`is the ${name} of the ${concept} ${value}`)
-    } else {
-      this.clauses.push(`is a ${name}`)
-    }
+  // Generates:
+  // is a football fan
+  is (name) {
+    this.clauses.push(`is a ${name}`)
     return this
   }
 
+  // Generates:
+  // has the colour 'brown' as hair colour
+  // has 'brown' as hair colour
   has (concept, property, name) {
     if (concept) {
       this.clauses.push(`has the ${concept} \'${property}\' as ${name}`)
@@ -24,6 +25,9 @@ class Instance {
     return this
   }
 
+  // Generates:
+  // supports the team Jill
+  // supports united
   property (property, concept, value) {
     if (concept) {
       this.clauses.push(`${property} the ${concept} \'${value}\'`)
@@ -38,7 +42,7 @@ class Instance {
   }
 
   prefix () {
-    let prefix = `there is a ${this.instance.concept} named ${this.instance.name}`
+    let prefix = `there is a ${this.instance.concept} named \'${this.instance.name}\'`
     return this.has_clauses() ? `${prefix} that` : prefix
   }
 

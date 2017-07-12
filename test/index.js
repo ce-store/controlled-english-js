@@ -5,25 +5,30 @@ import CE from '../index.js'
 
 test('can create new instances', t => {
   let sentences = new CE.Sentences()
-
   sentences
     .there_is_a('man', 'John')
 
-  t.is(sentences.toString(), 'there is a man named John.')
+  t.is(sentences.toString(), 'there is a man named \'John\'.')
+
+  sentences = new CE.Sentences()
+  sentences
+    .there_is_a('man', 'John Smith')
+
+  t.is(sentences.toString(), 'there is a man named \'John Smith\'.')
 
   sentences = new CE.Sentences()
   sentences
     .there_is_a('man', 'John')
-    .has(null, '53', 'age')
+    .has('value', '53', 'age')
 
-  t.is(sentences.toString(), 'there is a man named John that has \'53\' as age.')
+  t.is(sentences.toString(), 'there is a man named \'John\' that has the value \'53\' as age.')
 
   sentences = new CE.Sentences()
   sentences
     .there_is_a('man', 'John')
-    .is('sibling', 'person', 'Jill')
+    .property('is the sibling of', 'person', 'Jill')
 
-  t.is(sentences.toString(), 'there is a man named John that is the sibling of the person Jill.')
+  t.is(sentences.toString(), 'there is a man named \'John\' that is the sibling of the person \'Jill\'.')
 
   sentences = new CE.Sentences()
   sentences
@@ -31,7 +36,7 @@ test('can create new instances', t => {
     .is('football fan')
     .property('supports', null, 'united')
 
-  t.is(sentences.toString(), 'there is a man named John that is a football fan and supports \'united\'.')
+  t.is(sentences.toString(), 'there is a man named \'John\' that is a football fan and supports \'united\'.')
 
   sentences = new CE.Sentences()
   sentences
@@ -39,27 +44,27 @@ test('can create new instances', t => {
     .is('football fan')
     .property('supports', 'team', 'united')
 
-  t.is(sentences.toString(), 'there is a man named John that is a football fan and supports the team \'united\'.')
+  t.is(sentences.toString(), 'there is a man named \'John\' that is a football fan and supports the team \'united\'.')
 
   sentences = new CE.Sentences()
   sentences
     .there_is_a('man', 'John')
-    .is('sibling', 'person', 'Jill')
+    .property('is the sibling of', 'person', 'Jill')
     .has(null, '53', 'age')
-    .is('brother', 'person', 'James')
+    .property('is the brother of', 'person', 'James')
     .has(null, 'united', 'team')
 
-  t.is(sentences.toString(), 'there is a man named John that is the sibling of the person Jill and has \'53\' as age and is the brother of the person James and has \'united\' as team.')
+  t.is(sentences.toString(), 'there is a man named \'John\' that is the sibling of the person \'Jill\' and has \'53\' as age and is the brother of the person \'James\' and has \'united\' as team.')
 
   sentences = new CE.Sentences()
   sentences
     .there_is_a('man', 'John')
-    .is('sibling', 'person', 'Jill')
+    .property('is the sibling of', 'person', 'Jill')
     .has('colour', 'brown', 'hair colour')
-    .is('brother', 'person', 'James')
+    .property('is the brother of', 'person', 'James')
     .has(null, 'united', 'team')
 
-  t.is(sentences.toString(), 'there is a man named John that is the sibling of the person Jill and has the colour \'brown\' as hair colour and is the brother of the person James and has \'united\' as team.')
+  t.is(sentences.toString(), 'there is a man named \'John\' that is the sibling of the person \'Jill\' and has the colour \'brown\' as hair colour and is the brother of the person \'James\' and has \'united\' as team.')
 })
 
 test('can extend instances', t => {
@@ -67,18 +72,18 @@ test('can extend instances', t => {
   sentences
     .the('man', 'John')
 
-  t.is(sentences.toString(), 'the man John.')
+  t.is(sentences.toString(), 'the man \'John\'.')
 
   sentences = new CE.Sentences()
   sentences
     .the('man', 'John')
-    .is('sibling', 'person', 'Jill')
+    .property('is the sibling of', 'person', 'Jill')
     .has(null, '53', 'age')
     .is('football fan')
     .property('supports', null, 'united')
     .has(null, 'united', 'team')
 
-  t.is(sentences.toString(), 'the man John is the sibling of the person Jill and has \'53\' as age and is a football fan and supports \'united\' and has \'united\' as team.')
+  t.is(sentences.toString(), 'the man \'John\' is the sibling of the person \'Jill\' and has \'53\' as age and is a football fan and supports \'united\' and has \'united\' as team.')
 })
 
 test('can define concepts', t => {
@@ -132,7 +137,7 @@ test('can construct multiple sentences', t => {
   sentences
     .the('man', 'John')
 
-  t.is(sentences.toString(), 'conceptualise a ~ man ~ M. there is a man named John. the man John.')
+  t.is(sentences.toString(), 'conceptualise a ~ man ~ M. there is a man named \'John\'. the man \'John\'.')
 })
 
 test('can create new queries', t => {
