@@ -15,13 +15,21 @@ class Instance {
     return this
   }
 
-  has (property, concept) {
-    this.clauses.push(`has \'${property}\' as ${concept}`)
+  has (concept, property, name) {
+    if (concept) {
+      this.clauses.push(`has the ${concept} \'${property}\' as ${name}`)
+    } else {
+      this.clauses.push(`has \'${property}\' as ${name}`)
+    }
     return this
   }
 
-  property (property, value) {
-    this.clauses.push(`${property} \'${value}\'`)
+  property (property, concept, value) {
+    if (concept) {
+      this.clauses.push(`${property} the ${concept} \'${value}\'`)
+    } else {
+      this.clauses.push(`${property} \'${value}\'`)
+    }
     return this
   }
 
