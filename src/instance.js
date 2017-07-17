@@ -1,21 +1,21 @@
 'use strict'
 
 class Instance {
-  constructor (concept, name) {
-    this.instance = { concept, name}
+  constructor (concept, name, vowel) {
+    this.instance = { concept, name, vowel }
     this.clauses = []
   }
 
-  // Generates:
-  // is a football fan
-  is (name) {
-    this.clauses.push(`is a ${name}`)
+  is_a (parentConcept) {
+    this.clauses.push(`is a ${parentConcept}`)
     return this
   }
 
-  // Generates:
-  // has the colour 'brown' as hair colour
-  // has 'brown' as hair colour
+  is_an (parentConcept) {
+    this.clauses.push(`is an ${parentConcept}`)
+    return this
+  }
+
   has (concept, property, name) {
     if (concept) {
       this.clauses.push(`has the ${concept} \'${property}\' as ${name}`)
@@ -25,9 +25,6 @@ class Instance {
     return this
   }
 
-  // Generates:
-  // supports the team Jill
-  // supports united
   property (property, concept, value) {
     if (concept) {
       this.clauses.push(`${property} the ${concept} \'${value}\'`)
@@ -42,7 +39,12 @@ class Instance {
   }
 
   prefix () {
-    let prefix = `there is a ${this.instance.concept} named \'${this.instance.name}\'`
+    let prefix
+    if (this.instance.vowel) {
+      prefix = `there is an ${this.instance.concept} named \'${this.instance.name}\'`
+    } else {
+      prefix = `there is a ${this.instance.concept} named \'${this.instance.name}\'`
+    }
     return this.has_clauses() ? `${prefix} that` : prefix
   }
 

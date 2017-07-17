@@ -1,28 +1,42 @@
 'use strict'
 
 class Concept {
-  constructor (property, value) {
-    this.concept = { property, value }
+  constructor (property, value, vowel) {
+    this.concept = { property, value, vowel }
     this.clauses = []
   }
 
-  is (parentConcept) {
+  is_a (parentConcept) {
     this.clauses.push(`is a ${parentConcept}`)
     return this
   }
 
-  value (letter, property) {
-    this.clauses.push(`has the value ${letter} as ~ ${property} ~`)
+  is_an (parentConcept) {
+    this.clauses.push(`is an ${parentConcept}`)
     return this
   }
 
-  property (relationship, name, letter) {
-    this.clauses.push(`~ ${relationship} ~ the ${name} ${letter}`)
+  has (concept, property) {
+    let firstLetter = concept.charAt(0).toUpperCase()
+    this.clauses.push(`has the ${concept} ${firstLetter} as ~ ${property} ~`)
+    return this
+  }
+
+  property (property, concept) {
+    let firstLetter = concept.charAt(0).toUpperCase()
+    this.clauses.push(`~ ${property} ~ the ${concept} ${firstLetter}`)
     return this
   }
 
   toString () {
-    let conceptString = `conceptualise a ~ ${this.concept.property} ~ ${this.concept.value}`
+    let firstLetter = this.concept.property.charAt(0).toUpperCase()
+
+    let conceptString
+    if (this.concept.vowel) {
+      conceptString = `conceptualise an ~ ${this.concept.property} ~ ${firstLetter}`
+    } else {
+      conceptString = `conceptualise a ~ ${this.concept.property} ~ ${firstLetter}`
+    }
 
     if (this.clauses.length) {
       const clausesString = this.clauses.join(' and ')

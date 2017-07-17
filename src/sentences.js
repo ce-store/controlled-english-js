@@ -19,12 +19,20 @@ class Sentences {
       .join(' ')
   }
 
-  concept (property, value) {
+  conceptualise_a (property, value) {
     return this.sentence(new Concept(property, value))
+  }
+
+  conceptualise_an (property, value) {
+    return this.sentence(new Concept(property, value, true))
   }
 
   there_is_a (concept, instance) {
     return this.sentence(new Instance(concept, instance))
+  }
+
+  there_is_an (concept, instance) {
+    return this.sentence(new Instance(concept, instance, true))
   }
 
   the (concept, instance) {
