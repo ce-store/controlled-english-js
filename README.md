@@ -271,19 +271,19 @@ sentences
 [ person ]
 ```
 
-## .for_which(...variables)
+## .for(...variables)
 
 First line of a query setting up the variables.
 
 ```
 sentences
   .query('person')
-  .for_which('V1', 'V2')
+  .for('V1', 'V2')
 ```
 
 ```
 [ person ]
-for which V1 and V2 is it true.
+for which V1 and V2 is it true
 ```
 
 ## .there_is_a(concept, variable)
@@ -293,14 +293,15 @@ Tests if there is an instance of that concept.
 ```
 sentences
   .query('person')
-  .for_which('V1', 'V2')
+  .for('V1', 'V2')
   .there_is_a('person', 'V1')
 ```
 
 ```
 [ person ]
 for which V1 and V2 is it true
-  ( there is a person named V1 ).
+  ( there is a person named V1 )
+.
 ```
 
 ## .there_is_an(concept, variable)
@@ -314,7 +315,7 @@ Tests if an instance has the parent concept.
 ```
 sentences
   .query('man')
-  .for_which('V1', 'V2')
+  .for('V1', 'V2')
   .there_is_a('person', 'V1')
   .is_a('person', 'V1', 'man')
 ```
@@ -323,8 +324,12 @@ sentences
 [ man ]
 for which V1 and V2 is it true
   ( there is a person named V1 ) and
-  ( the person V1 is a man ).
+  ( the person V1 is a man )
+.
 ```
+## .is_an(concept, variable, parent_concept)
+
+Alias for `.is_a`.
 
 ## .has(concept, variable1, property_concept, variable2, property)
 
@@ -333,7 +338,7 @@ Tests if each of the matching instances has the property.
 ```
 sentences
   .query('age')
-  .for_which('V1', 'V2')
+  .for('V1', 'V2')
   .there_is_a('person', 'V1')
   .has('person', 'V1', 'value', 'V2', 'age')
 ```
@@ -342,7 +347,8 @@ sentences
 [ age ]
 for which V1 and V2 is it true
   ( there is a person named V1 ) and
-  ( the person V1 has the value V2 as age ).
+  ( the person V1 has the value V2 as age )
+.
 ```
 
 ## .property(concept, variable1, property, property_concept, variable2)
@@ -352,7 +358,7 @@ Tests if each of the matching instances has the property.
 ```
 sentences
   .query('sibling')
-  .for_which('V1', 'V2')
+  .for('V1', 'V2')
   .there_is_a('person', 'V1')
   .property('person', 'V1', 'is the sibling of', 'person', 'V2')
 ```
@@ -361,7 +367,8 @@ sentences
 [ sibling ]
 for which V1 and V2 is it true
   ( there is a person named V1 ) and
-  ( the person V1 is the sibling of the person V2 ).
+  ( the person V1 is the sibling of the person V2 )
+.
 ```
 
 # Rules
