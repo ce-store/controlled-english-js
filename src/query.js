@@ -7,40 +7,64 @@ class Query {
     this.clauses = []
   }
 
-  there (concept, variable) {
-    this.clauses.push(`there is a ${concept} named ${variable}`)
-    return this
-  }
-
-  the (...params) {
-    if (params.length === 3) {
-      this.clauses.push(`the ${params[0]} ${params[1]} is a ${params[2]}`)
-    } else if (params.length === 5) {
-      this.clauses.push(`the ${params[0]} ${params[1]} ${params[2]} the ${params[3]} ${params[4]}`)
-    } else {
-      throw new Exception('Unknown number of arguments, must be three or five.')
-    }
-    return this
-  }
-
   for (...variables) {
     this.variables = variables
     return this
   }
 
+  there_is_a (concept, variable) {
+    this.clauses.push(`there is a ${concept} named ${variable}`)
+    return this
+  }
+
+  there_is_an (concept, variable) {
+    this.clauses.push(`there is an ${concept} named ${variable}`)
+    return this
+  }
+
+  is_a (concept, variable, parentConcept) {
+    this.clauses.push(`the ${concept} ${variable} is a ${parentConcept}`)
+    return this
+  }
+
+  is_an (concept, variable, parentConcept) {
+    this.clauses.push(`the ${concept} ${variable} is an ${parentConcept}`)
+    return this
+  }
+
+  has (concept, variable1, property_concept, variable2, property) {
+    this.clauses.push(`the ${concept} ${variable1} has the ${property_concept} ${variable2} as ${property}`)
+    return this
+  }
+
+  property (concept, variable1, property, property_concept, variable2) {
+    this.clauses.push(`the ${concept} ${variable1} ${property} the ${property_concept} ${variable2}`)
+    return this
+  }
+
   toString () {
-    let variables = this.variables.reduce((result, current, index, arr) => {
-      if (!result) return current
-      if (index === arr.length - 1) return `${result} and ${current}`
+    let query = `[ ${this.name} ]\n`
 
-      return `${result}, ${current}`
-    }, '')
+    if (this.variables.length) {
+      let variables = this.variables.reduce((result, current, index, arr) => {
+        if (!result) return current
+        if (index === arr.length - 1) return `${result} and ${current}`
 
-    let clauses = this.clauses
-      .map(clause => `  ( ${clause} )`)
-      .join(' and\n')
+        return `${result}, ${current}`
+      }, '')
 
-    return `[ ${this.name} ]\nfor which ${variables} is it true that\n${clauses}\n.`
+      query += `for which ${variables} is it true that\n`
+    }
+
+    if (this.clauses.length) {
+      let clauses = this.clauses
+        .map(clause => `  ( ${clause} )`)
+        .join(' and\n')
+
+      query += `${clauses}\n.`
+    }
+
+    return query
   }
 }
 

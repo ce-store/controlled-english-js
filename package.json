@@ -10,7 +10,10 @@
   "scripts": {
     "test": "ava"
   },
-  "author": "James Thomas <james@jamesthom.as>",
+  "authors": [
+    "James Thomas <james@jamesthom.as>",
+    "Anna Thomas <annat21@live.co.uk>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.19.1"
