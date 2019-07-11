@@ -16,7 +16,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.19.1"
+    "ava": "^2.2.0"
   },
   "dependencies": {
     "node-fetch": "^1.7.0"
