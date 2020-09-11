@@ -19,6 +19,6 @@
     "ava": "^2.2.0"
   },
   "dependencies": {
-    "node-fetch": "^1.7.0"
+    "node-fetch": "^2.6.1"
   }
 }
